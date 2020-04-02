@@ -5,17 +5,21 @@ const Recipes = () => {
   
   const [ recipeList, setRecipeList] = useState([]);
   
-  useEffect( () => {
+  useEffect(() => {
     const fetchRecipes = async () => {
-      const response = await axios.get('localhost:4000/recipelist');
-      console.log(response.data);
+      const response = await axios.get('http://localhost:4000/recipelist');
+      console.log("here is the fetch result", response.data.recipeNames);
       setRecipeList(response.data);
     }
     fetchRecipes();
   }, [])
   
-  console.log("this is the recipe list response:", recipeList.recipeNames)
-  const recipeComponents = recipeList.length && recipeList.recipeNames;
+  console.log("this is the recipe list response:", recipeList.recipes)
+  const recipeComponents = !recipeList ? recipeList.recipes.map(item => {
+    return (
+      <p>{item.name}</p>
+    )
+  }) : <p>nothing here</p>
   
   const test = <p>hi this is a test</p>;
   
