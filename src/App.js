@@ -17,7 +17,7 @@ const App = () => {
     fetchData();
   }, []);
   
-  console.log(testInfo);
+  //console.log(testInfo);
   
   
   return (
@@ -26,7 +26,7 @@ const App = () => {
         <Route path='/' exact>
           <h1>{testInfo.title}here we go!</h1>
           <a href="/user/login">Log In</a>
-          <a href="/recipes">Recipe list</a>
+          <a href="/recipes">Recipe</a>
         </Route>
         <Route path='/recipes' component={Recipes} />
         <Route path='/user/login' component={LogIn} />
