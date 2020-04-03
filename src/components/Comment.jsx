@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const CommentSection = styled.div`
-  background-color: palevioletred;
+  background-color: #ffd9de;
+  background-image: linear-gradient(315deg, #ffd9de 0%, #e99ba6 74%);
   padding: 2vh;
   border-radius: 6px;
   margin: 1vh auto;
 `;
 
 const Comment = (props) => {
+  
   
   const { title, rating, first, last, comment} = props;
  
