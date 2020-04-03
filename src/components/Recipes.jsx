@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -85,6 +86,15 @@ const RepLink = styled.a`
 const Recipes = () => {
   
   const [ recipeList, setRecipeList] = useState([]);
+  const [ directionsValue, setDirectionsValue] = useState('');
+  const [ rateValue, setRatevalue] = useState('');
+  const [ ingredientsValue, setIngredientsValue] = useState('');
+  const [ imageValue, setImageValue] = useState('');
+  const [ titleValue, setTitleValue] = useState('');
+  const [ userId, setUserId] = useState(1);
+  const [ userFirst, setUserFirst] = useState('Lockett');
+  const [ userLast, setUserLast] = useState('Pundt');
+  
   
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -95,8 +105,33 @@ const Recipes = () => {
     fetchRecipes();
   }, [])
   
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post(`http://localhost:4000/recipelist`, {rateValue, ingredientsValue, directionsValue, imageValue, titleValue, userId, userFirst, userLast});
+    console.log('submitted');
+  }
   
-
+  const handleRate = (event) => {
+    setRatevalue(event.target.value);
+  }
+  
+  const handleTitle = (event) => {
+    setTitleValue(event.target.value);
+  }
+  
+  const handleIngredients = (event) => {
+    setIngredientsValue(event.target.value);
+  }
+  
+  const handleDirections = (event) => {
+    setDirectionsValue(event.target.value);
+  }
+  
+  const handleImage = (event) => {
+    setImageValue(event.target.value);
+    console.log(imageValue);
+  }
+  
   const recipeComponents = !!recipeList ? recipeList.map((item, index) => {
     
       const recipeLink = `./singlerecipe/${item.id}`;
@@ -117,25 +152,25 @@ const Recipes = () => {
       <ul>
         {recipeComponents}
       </ul>
-      <Form  action="recipelist"  method="POST" autoComplete="off">
+      <Form  onSubmit={handleSubmit} autoComplete="off">
         <h2>Submit A Recipe:</h2>
         <Input type="hidden" name="user_id" value=""/>
         <Input type="hidden" name="first_name" value=""/>
         <Input type="hidden" name="last_name" value=""/>
         <Label>Recipe Title:
-            <Input type="text" name="title" placeholder="Recipe Title"/>
+            <Input type="text" name="title" value={titleValue} placeholder="Recipe Title" onChange={handleTitle}/>
         </Label>
         <Label>Rating: 
-            <Input type="text" name="rating" placeholder="Rate This Recipe"/>
+            <Input type="text" name="rating" value={rateValue} placeholder="Rate This Recipe" onChange={handleRate}/>
         </Label>
         <Label>Ingredients: 
-            <TextArea name="ingredients" placeholder="Seperated by commas please ;)" rows="10" cols="40"></TextArea>
+            <TextArea name="ingredients" value={ingredientsValue} placeholder="Seperated by commas please ;)" rows="10" cols="40" onChange={handleIngredients}></TextArea>
         </Label>
         <Label>Directions: 
-            <TextArea name="directions" placeholder="Enter Your Directions" rows="10" cols="40"></TextArea>
+            <TextArea name="directions" value={directionsValue} placeholder="Enter Your Directions" rows="10" cols="40" onChange={handleDirections}></TextArea>
         </Label>
         <Label>Image: 
-            <Input type="file" name="img_upload"/>
+            <Input type="file" value={imageValue} name="img_upload" onChange={handleImage}/>
         </Label>
         <Button type="submit">Submit Recipe</Button>
     </Form>
