@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Styled from 'styled-components';
+import styled from 'styled-components';
 
+
+const Thumbnail = styled.img`
+    width: 10vh;
+    height: 10vh;
+    border-radius: 6px;
+    margin: 0 2vh;
+  `;
+  
+  const RecipeItem = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 1vw;
+    
+  `
 
 const Recipes = () => {
   
@@ -16,15 +30,16 @@ const Recipes = () => {
     fetchRecipes();
   }, [])
   
-  //console.log("this is the recipe list response:", recipeList)
+  
 
   const recipeComponents = !!recipeList ? recipeList.map((item, index) => {
+    
       const recipeLink = `./singlerecipe/${item.id}`;
-      const imgSrc = ``;
+      const imgSrc = `${item.img}`;
       return (
-        <>
-          <img src={imgSrc} alt='recipe thumbnail' /><li key={index}><a href={recipeLink}>{item.name}</a></li>
-        </>
+        <RecipeItem key={item.id}>
+          <Thumbnail src={imgSrc} alt='recipe thumbnail' /><li ><a href={recipeLink}>{item.name}</a></li>
+        </RecipeItem>
       )
     
   }) : <p>nothing here</p>
