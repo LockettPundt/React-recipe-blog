@@ -16,6 +16,10 @@ const RecipeItem = styled.div`
   padding: 1vw;
   
 `
+const Title = styled.h1`
+  font-size: 4vw;
+  
+`
 const Form = styled.form`
   font-size: 2.6vh;
   background-color: #ffd9de;
@@ -53,8 +57,28 @@ const Button = styled.button`
   border: 5px solid black;
   padding: 2vh;
   
-  &hover {
-    background-color: red;
+  &:hover {
+    border: 5px solid white;
+    color: #e99ba6;
+    background-color: rgb(23, 23, 23)
+   
+  }
+`
+const List = styled.li`
+  text-decoration: none;
+  list-style: none;
+  
+`
+const RepLink = styled.a`
+  transform: 0.3s;
+  font-size: 4vh;
+  text-decoration: none;
+  color: rgb(23, 23, 23);
+  
+  &:hover {
+    
+    color: #e99ba6;
+   
   }
 `
 
@@ -79,7 +103,7 @@ const Recipes = () => {
       const imgSrc = `${item.img}`;
       return (
         <RecipeItem key={item.id}>
-          <Thumbnail src={imgSrc} alt='recipe thumbnail' /><li ><a href={recipeLink}>{item.name}</a></li>
+          <Thumbnail src={imgSrc} alt='recipe thumbnail' /><List ><RepLink href={recipeLink}>{item.name}</RepLink></List>
         </RecipeItem>
       )
     
@@ -89,7 +113,7 @@ const Recipes = () => {
   
   return (
     <section>
-      <h1>This is the recipes List</h1>
+      <Title>Recipes</Title>
       <ul>
         {recipeComponents}
       </ul>
@@ -115,7 +139,7 @@ const Recipes = () => {
         </Label>
         <Button type="submit">Submit Recipe</Button>
     </Form>
-      <a href='/'>Home</a>
+      <RepLink href='/'>Home</RepLink>
     </section>
   );
   
