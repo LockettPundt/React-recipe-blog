@@ -13,16 +13,35 @@ const Title = styled.h1`
     width: 100%;
   
   `
+  const SectionTitle = styled.h1`
+    font-size: 3vh;
+    
+  
+  
+  `;
+  
   
   const RecipeImg = styled.img`
     height: 30vh;
     width: auto;
-  `
+  `;
   const Rating = styled.span`
     color: gold;
     font-size: 4vh;
   
-  `
+  `;
+  const RepLink = styled.a`
+  transform: 0.3s;
+  font-size: 3vh;
+  text-decoration: none;
+  color: rgb(23, 23, 23);
+  
+  &:hover {
+    
+    color: #e99ba6;
+   
+  }
+`;
 
 const SingleRecipe = (props) => {
   const { id } = props.match.params;
@@ -64,17 +83,19 @@ const SingleRecipe = (props) => {
     <div>
       <Title>{recipe.name ? recipe.name : ''}</Title>
       <RecipeImg src={recipe.img} />
-      <h3>Submitted By: {submitted.first_name}  {submitted.last_name} <Rating>{rating}</Rating></h3>
+      <h2>Submitted By: {submitted.first_name}  {submitted.last_name} <Rating>{rating}</Rating>{' '}({comments.length})</h2>
+      <SectionTitle>Ingredients</SectionTitle>
       <ul>
         {recipeData}
       </ul>
       <section>
+        <SectionTitle>Directions</SectionTitle>
         {recipe.directions}
       </section>
       
       {commentList}
       <CommentForm id={recipe.id} />
-      <a href="/recipes">Back</a>
+      <RepLink href="/recipes">Back</RepLink>
     </div>
   )
   
