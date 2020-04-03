@@ -74,7 +74,7 @@ const CommentForm = (props) => {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:4000/recipelist/${id}`, { ratingValue, commentValue, titleValue, userId});
+    axios.post(`http://localhost:4000/recipelist/${id}`, { ratingValue, commentValue, titleValue, userId, id});
     console.log('submitted');
     
   }
