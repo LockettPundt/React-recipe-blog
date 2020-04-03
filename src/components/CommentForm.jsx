@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
+import axios from 'axios';
 
 const Form = styled.form`
   font-size: 2.6vh;
@@ -39,13 +39,23 @@ const Button = styled.button`
   border: 5px solid black;
   padding: 2vh;
   
-  &hover {
-    background-color: red;
+  &:hover {
+    border: 5px solid white;
+    color: #e99ba6;
+    background-color: rgb(23, 23, 23)
+   
   }
 `
 
 
 const CommentForm = (props) => {
+  
+  const [ratingValue , setRatingValue ] = useState('');
+  const [commentValue, setCommentValue] = useState('');
+  const [titleValue, setTitleValue] = useState('');
+  const [userId, setUserId] = useState(3);
+  const {id} = props;
+  const postLink = `http://localhost:4000/recipelist/${id}`;
   
   const handleTitle = (event) => {
     setTitleValue(event.target.value)
@@ -59,23 +69,20 @@ const CommentForm = (props) => {
   
   const handleComment = (event) => {
     setCommentValue(event.target.value);
-    console.log(commentValue);
+    //console.log(commentValue);
   }
   
   const handleSubmit = (event) => {
     event.preventDefault();
+    axios.post(`http://localhost:4000/recipelist/${id}`, { ratingValue, commentValue, titleValue, userId});
     console.log('submitted');
     
   }
   
-  const [ratingValue , setRatingValue ] = useState('');
-  const [commentValue, setCommentValue] = useState('');
-  const [titleValue, setTitleValue] = useState('');
-  const [userId, setUserId] = useState(3);
-  const {id} = props;
-  const postLink = `http://localhost:4000/recipelist/${id}`
+  
+  
   return (
-    <Form  action={postLink} method="POST" onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
         <h3>Leave a comment: </h3>
         <input type="hidden" name="user_id" value={userId} />
         <Label>Title:
