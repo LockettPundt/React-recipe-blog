@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Styled from 'styled-components';
+
 
 const Recipes = () => {
   
@@ -8,28 +10,33 @@ const Recipes = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       const response = await axios.get('http://localhost:4000/recipelist');
-      console.log("here is the fetch result", response.data.recipeNames);
+      // console.log("here is the fetch result", response.data);
       setRecipeList(response.data);
     }
     fetchRecipes();
   }, [])
   
-  console.log("this is the recipe list response:", recipeList.recipes)
-  const recipeComponents = !recipeList ? recipeList.recipes.map(item => {
-    return (
-      <p>{item.name}</p>
-    )
+  //console.log("this is the recipe list response:", recipeList)
+
+  const recipeComponents = !!recipeList ? recipeList.map((item, index) => {
+      const recipeLink = `./singlerecipe/${item.id}`;
+      const imgSrc = ``;
+      return (
+        <>
+          <img src={imgSrc} alt='recipe thumbnail' /><li key={index}><a href={recipeLink}>{item.name}</a></li>
+        </>
+      )
+    
   }) : <p>nothing here</p>
   
-  const test = <p>hi this is a test</p>;
+
   
   return (
     <section>
       <h1>This is the recipes List</h1>
-      <section>
+      <ul>
         {recipeComponents}
-        {test}
-      </section>
+      </ul>
       <form  action="recipelist"  method="POST" autoComplete="off">
         <h2>Submit A Recipe:</h2>
         <input type="hidden" name="user_id" value=""/>
