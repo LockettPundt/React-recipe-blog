@@ -5,7 +5,7 @@ import axios from 'axios';
 import Recipes from './components/Recipes';
 import LogIn from './components/LogIn';
 import SingleRecipe from './components/SingleRecipe';
-
+import Wrapper from './components/Wrapper'
 
 const App = () => {
   const [testInfo, setTestInfo ] = useState([]);
@@ -22,7 +22,7 @@ const App = () => {
   
   
   return (
-    <div className="App">
+    <Wrapper>
       <Router>
         <Route path='/' exact>
           <h1>{testInfo.title}here we go!</h1>
@@ -34,7 +34,7 @@ const App = () => {
         <Route path='/user/login' exact component={LogIn} />
         
       </Router>
-    </div>
+    </Wrapper>
   );
 }
 
