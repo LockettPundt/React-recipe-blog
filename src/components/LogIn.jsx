@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 const LogIn = () => {
   
   return (
-    <form action="/users/login" method="POST" class="forms">
+    <form action="/users/login" method="POST">
       <label>Email:
           <input type="text" name="user_email" placeholder="Enter Your Email" />
       </label>
