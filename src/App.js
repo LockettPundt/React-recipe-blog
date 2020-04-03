@@ -4,6 +4,7 @@ import Styled from 'styled-components';
 import axios from 'axios';
 import Recipes from './components/Recipes';
 import LogIn from './components/LogIn';
+import SingleRecipe from './components/SingleRecipe';
 
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get('http://localhost:4000/');
-      setTestInfo(response.data);
+      setTestInfo(response.data[0]);
     };
     fetchData();
   }, []);
@@ -28,8 +29,10 @@ const App = () => {
           <a href="/user/login">Log In</a>
           <a href="/recipes">Recipe</a>
         </Route>
+        <Route path='/singlerecipe/:id?' exact component={SingleRecipe} />
         <Route path='/recipes' component={Recipes} />
-        <Route path='/user/login' component={LogIn} />
+        <Route path='/user/login' exact component={LogIn} />
+        
       </Router>
     </div>
   );
