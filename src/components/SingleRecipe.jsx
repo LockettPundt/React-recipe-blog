@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Styled from 'styled-components';
+import styled from 'styled-components';
+import Comment from './Comment';
+import Wrapper from './Wrapper'
+
+const Title = styled.h1`
+    font-size: 5vh;
+    color: rgb(23, 23, 23);
+    width: 100%;
+  
+  `
+  
+  const RecipeImg = styled.img`
+    height: 30vh;
+    width: auto;
+  `
+  const Rating = styled.span`
+    color: gold;
+    font-size: 4vh;
+  
+  `
 
 const SingleRecipe = (props) => {
   const { id } = props.match.params;
@@ -22,39 +41,36 @@ const SingleRecipe = (props) => {
     fetchSingleRecipe();
   }, [id]);
   //console.log("recipe: ",recipe.ingredients);
-  console.log("comments: ", comments);
-  console.log("cSubmitted: ", submitted);
+  // console.log("comments: ", comments);
+  // console.log("cSubmitted: ", submitted);
   const rating = !!recipe ? "★".repeat(recipe.rating) : 'Not yet Rated';
-  
-  const recipeData = !!recipe.ingredients ? recipe.ingredients.split(',').map(item => {
-    return <li>{item}</li>
+  const recipeData = !!recipe.ingredients ? recipe.ingredients.split(',').map((item, index) => {
+    return <li key={index}>{item}</li>
   }) : '';
+  
   
   const commentList = !!(comments.length) ? comments.map((item, index) => {
     return (
-      <section>
-        <h3>{item.title} {"★".repeat(item.rating)}</h3>
-        <p>By: {item.first_name} {item.last_name}</p>
-        <p>{item.comment}</p>
-      </section>
+      <Comment key={index} title={item.title} rating={item.rating} first={item.first_name} last={item.last_name} comment={item.comment} />
     )
   }) : <h3>Be the first to leave a comment!</h3>
  
 
   return (
-    <>
-      <h1>{recipe.name ? recipe.name : ''}</h1>
-      <h3>Submitted By: {submitted.first_name}  {submitted.last_name}</h3>
-      <h3>{rating}</h3>
+    <div>
+      <Title>{recipe.name ? recipe.name : ''}</Title>
+      <RecipeImg src={recipe.img} />
+  <h3>Submitted By: {submitted.first_name}  {submitted.last_name} <Rating>{rating}</Rating></h3>
       <ul>
         {recipeData}
       </ul>
       <section>
         {recipe.directions}
       </section>
-      <a href="/recipes">Back</a>
+      
       {commentList}
-    </>
+      <a href="/recipes">Back</a>
+    </div>
   )
   
 }
