@@ -3,6 +3,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Comment from './Comment';
 import Wrapper from './Wrapper'
+import CommentForm from './CommentForm';
+
+
 
 const Title = styled.h1`
     font-size: 5vh;
@@ -48,8 +51,9 @@ const SingleRecipe = (props) => {
     return <li key={index}>{item}</li>
   }) : '';
   
-  
+  console.log(recipe.id);
   const commentList = !!(comments.length) ? comments.map((item, index) => {
+    
     return (
       <Comment key={index} title={item.title} rating={item.rating} first={item.first_name} last={item.last_name} comment={item.comment} />
     )
@@ -60,7 +64,7 @@ const SingleRecipe = (props) => {
     <div>
       <Title>{recipe.name ? recipe.name : ''}</Title>
       <RecipeImg src={recipe.img} />
-  <h3>Submitted By: {submitted.first_name}  {submitted.last_name} <Rating>{rating}</Rating></h3>
+      <h3>Submitted By: {submitted.first_name}  {submitted.last_name} <Rating>{rating}</Rating></h3>
       <ul>
         {recipeData}
       </ul>
@@ -69,6 +73,7 @@ const SingleRecipe = (props) => {
       </section>
       
       {commentList}
+      <CommentForm id={recipe.id} />
       <a href="/recipes">Back</a>
     </div>
   )
