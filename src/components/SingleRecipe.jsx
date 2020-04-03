@@ -8,38 +8,39 @@ const SingleRecipe = (props) => {
   const [comments, setComments] = useState([]);
   const [submitted, setSubmitted] = useState([]);
   
-  
-  //console.log('this is the params:', id);
+
   
   useEffect(() => {
     const fetchSingleRecipe = async () => {
       const response = await axios.get(`http://localhost:4000/recipelist/${id}`);
       //console.log("this is the single recipe response", response.data[0][0].title);
       setRecipe(response.data[0][0] || []);
-      setComments(response.data[1] || []);
-      setSubmitted(response.data[2][0] || []);
+      setComments(response.data[2] || []);
+      setSubmitted(response.data[1][0] || []);
     }
     
     fetchSingleRecipe();
   }, [id]);
   //console.log("recipe: ",recipe.ingredients);
   console.log("comments: ", comments);
-  //console.log("cSubmitted: ", submitted);
+  console.log("cSubmitted: ", submitted);
   const rating = !!recipe ? "★".repeat(recipe.rating) : 'Not yet Rated';
   
   const recipeData = !!recipe.ingredients ? recipe.ingredients.split(',').map(item => {
     return <li>{item}</li>
   }) : '';
   
-  const commentList = !!comments[0] ? comments.map((item, index) => {
+  const commentList = !!(comments.length) ? comments.map((item, index) => {
     return (
       <section>
         <h3>{item.title} {"★".repeat(item.rating)}</h3>
+        <p>By: {item.first_name} {item.last_name}</p>
         <p>{item.comment}</p>
       </section>
     )
-  }) : <h3>Be the first to leave a comment!</h3>;
-  
+  }) : <h3>Be the first to leave a comment!</h3>
+ 
+
   return (
     <>
       <h1>{recipe.name ? recipe.name : ''}</h1>
